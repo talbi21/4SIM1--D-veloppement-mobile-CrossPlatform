@@ -11,9 +11,9 @@ class MyGames extends StatefulWidget {
 }
 
 class _MyGamesState extends State<MyGames> {
-  final List<GameData> games = [];
+  final List<GameData> _games = [];
 
-  final description =
+  final String _description =
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
       "sed do eiusmod tempor incididunt ut "
       "labore et dolore magna aliqua. Ut enim ad minim veniam, "
@@ -21,29 +21,27 @@ class _MyGamesState extends State<MyGames> {
       "aliquip ex ea commodo consequat. Duis aute irure dolor "
       "in reprehenderit in voluptate velit esse cillum dolore "
       "eu fugiat nulla pariatur. Excepteur sint occaecat "
-      "cupidatat non proident, sunt in culpa qui officia "
-      "deserunt mollit anim id est laborum.";
+      "cupidatat non proident, sunt in culpa qui officia ";
 
   @override
   void initState() {
-    // TODO: implement initState
-    games.add(GameData(
-        image: "assets/images/dmc5.jpg",
+    _games.add(GameData(
         title: "Devil May Cry 5",
+        image: "assets/images/dmc5.jpg",
+        description: _description,
         price: 200,
-        description: description,
         quantity: 3000));
-    games.add(GameData(
-        image: "assets/images/re8.jpg",
+    _games.add(GameData(
         title: "Resident Evil VIII",
+        image: "assets/images/re8.jpg",
+        description: _description,
         price: 200,
-        description: description,
         quantity: 3000));
-    games.add(GameData(
-        image: "assets/images/nfs.jpg",
+    _games.add(GameData(
         title: "Need For Speed Heat",
+        image: "assets/images/nfs.jpg",
+        description: _description,
         price: 100,
-        description: description,
         quantity: 3000));
     super.initState();
   }
@@ -51,21 +49,16 @@ class _MyGamesState extends State<MyGames> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Ma bibliothèque"),
-      ),
-      body: GridView.builder(
-          itemCount: games.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisExtent: 120,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 5),
-          itemBuilder: (context, index) {
-            return MyGameInfo(
-                image: games[index].image, title: games[index].title);
-          }),
-    );
+        body: GridView.builder(
+      itemCount: _games.length,
+      itemBuilder: (BuildContext context, int index) {
+        return MyGameInfo(_games[index].image, _games[index].title);
+      },
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisExtent: 120,
+          mainAxisSpacing: 5,
+          crossAxisSpacing: 5),
+    ));
   }
 }
-// MyGameInfo(image: "assets/images/re8.jpg", title: "Resident Evil VIII")

@@ -1,52 +1,47 @@
 import 'package:flutter/material.dart';
 
 class ProductDetails extends StatefulWidget {
-  final String image;
-  final String title;
-  final String description;
-  final int price;
-  final int quantity;
-  const ProductDetails({
-    Key? key,
-    required this.image,
-    required this.title,
-    required this.description,
-    required this.price,
-    required this.quantity,
-  }) : super(key: key);
+  final String _image;
+  final String _title;
+  final String _description;
+  final int _price;
+  final int _quantity;
+
+  // ignore: use_key_in_widget_constructors
+  const ProductDetails(
+      this._image, this._title, this._description, this._price, this._quantity);
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  late int currentQuantity;
+  late int _currentQuantity;
 
   @override
   void initState() {
-    // TODO: implement initState
+    _currentQuantity = widget._quantity;
     super.initState();
-    currentQuantity = widget.quantity;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget._title),
       ),
       body: Column(
         children: [
           Container(
               width: double.infinity,
               margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child: Image.asset(widget.image, width: 460, height: 215)),
+              child: Image.asset(widget._image, width: 460, height: 215)),
           Container(
             margin: const EdgeInsets.fromLTRB(20, 0, 20, 50),
-            child: Text(widget.description),
+            child: Text(widget._description),
           ),
-          Text(widget.price.toString() + " TND", textScaleFactor: 3),
-          Text("Exemplaires disponibles : " + currentQuantity.toString()),
+          Text(widget._price.toString() + " TND", textScaleFactor: 3),
+          Text("Exemplaires disponibles : " + _currentQuantity.toString()),
           const SizedBox(
             height: 50,
           ),
@@ -66,9 +61,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
               onPressed: () {
                 setState(() {
-                  currentQuantity--;
+                  _currentQuantity--;
                 });
-                print(currentQuantity);
               },
             ),
           )

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gstore4sim1/home/home.dart';
+import 'package:gstore4sim1/reset_password.dart';
 import 'package:gstore4sim1/signup.dart';
-import 'package:gstore4sim1/resetPassword.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -10,7 +11,9 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
+  // ignore: unused_field
   late String? _username;
+  // ignore: unused_field
   late String? _password;
 
   final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
@@ -40,9 +43,9 @@ class _SigninState extends State<Signin> {
                 },
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return "el username malezmoush ykoun feregh ";
+                    return "Le username ne doit pas etre vide";
                   } else if (value.length < 5) {
-                    return "el username lezem fih aal klila 5 hrouf";
+                    return "Le username doit avoir au moins 5 caractères";
                   } else {
                     return null;
                   }
@@ -52,21 +55,22 @@ class _SigninState extends State<Signin> {
             Container(
               margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
               child: TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Mot de passe"),
-                  onSaved: (String? value) {
-                    _password = value;
-                  },
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return "el mdp kifkif zeda malezmoush ykoun feregh ";
-                    } else if (value.length < 8) {
-                      return "el mdp lezem fih aal klila 5 hrouf";
-                    } else {
-                      return null;
-                    }
-                  }),
+                obscureText: true,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), labelText: "Mot de passe"),
+                onSaved: (String? value) {
+                  _username = value;
+                },
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Le mot de passe ne doit pas etre vide";
+                  } else if (value.length < 5) {
+                    return "Le mot de passe doit avoir au moins 5 caractères";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
             ),
             Container(
                 margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
@@ -75,6 +79,10 @@ class _SigninState extends State<Signin> {
                   onPressed: () {
                     if (_keyForm.currentState!.validate()) {
                       _keyForm.currentState!.save();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Home()),
+                      );
                     }
                   },
                 )),
@@ -87,7 +95,10 @@ class _SigninState extends State<Signin> {
                   ),
                   child: const Text("Créer un compte"),
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, "/signup");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Signup()),
+                    );
                   },
                 )),
             Container(
@@ -95,17 +106,24 @@ class _SigninState extends State<Signin> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Mot de passe oublié ?"),
-                  SizedBox(
+                  const Text("Mot de passe oublié ?"),
+                  const SizedBox(
                     width: 10,
                   ),
                   GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        // Toggle light when tapped.
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ResetPassword()),
+                        );
+                      });
+                    },
                     child: const Text("Cliquez ici",
                         style: TextStyle(color: Colors.blue)),
-                    onTap: () {
-                      Navigator.pushNamed(context, "/resetPassword");
-                    },
-                  )
+                  ),
                 ],
               ),
             )

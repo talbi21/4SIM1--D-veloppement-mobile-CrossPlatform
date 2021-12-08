@@ -3,18 +3,13 @@ import 'package:flutter/material.dart';
 class ProductInfo extends StatelessWidget {
   final String image;
   final String title;
-  final int price;
   final String description;
+  final int price;
   final int quantity;
 
-  const ProductInfo({
-    Key? key,
-    required this.image,
-    required this.title,
-    required this.price,
-    required this.description,
-    required this.quantity,
-  }) : super(key: key);
+  // ignore: use_key_in_widget_constructors
+  const ProductInfo(
+      this.image, this.title, this.description, this.price, this.quantity);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +28,7 @@ class ProductInfo extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Text(price.toString() + " TND", textScaleFactor: 2),
+              Text(price.toString() + " TND", textScaleFactor: 2)
             ],
           )
         ],

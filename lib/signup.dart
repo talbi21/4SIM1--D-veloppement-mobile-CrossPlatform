@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatefulWidget {
@@ -8,13 +9,13 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  late String? username;
-  late String? email;
-  late String? password;
-  late String? birth;
-  late String? address;
+  late String? _username;
+  late String? _email;
+  late String? _pwd;
+  late String? _birth;
+  late String? _address;
 
-  final keyForm = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,25 +24,28 @@ class _SignupState extends State<Signup> {
         title: const Text("Inscription"),
       ),
       body: Form(
-        key: keyForm,
+        key: _formKey,
         child: ListView(
           children: [
             Container(
                 width: double.infinity,
                 margin: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-                child: Image.asset("assets/images/minecraft.jpg",
-                    width: 460, height: 215)),
+                child: Image.asset("assets/images/minecraft.jpg", width: 460, height: 215)
+            ),
             Container(
               margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
               child: TextFormField(
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), labelText: "Username"),
                 onSaved: (String? value) {
-                  username = value;
+                  _username = value;
                 },
-                validator: (value) {
-                  if (value!.isEmpty || value.length < 5) {
-                    return "Username doit contenir au moins 5 caracteres ";
+                validator: (String? value) {
+                  if(value!.isEmpty || value.length < 5) {
+                    return "Le Username doit avoir au moins 5 caractères !";
+                  }
+                  else {
+                    return null;
                   }
                 },
               ),
@@ -49,66 +53,79 @@ class _SignupState extends State<Signup> {
             Container(
               margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
               child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Email"),
-                  onSaved: (String? value) {
-                    email = value;
-                  },
-                  validator: (value) {
-                    RegExp regex = RegExp(
-                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                    if (value!.isEmpty || !regex.hasMatch(value)) {
-                      return "Email doit etre valide ";
-                    }
-                  }),
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), labelText: "Email"),
+                onSaved: (String? value) {
+                  _email = value;
+                },
+                validator: (String? value) {
+                  RegExp regex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                  if(value!.isEmpty || !regex.hasMatch(value)) {
+                    return "L'adresse email n'est pas valide !";
+                  }
+                  else {
+                    return null;
+                  }
+                },
+              ),
             ),
-            Container(
-                margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                child: TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Mot de passe"),
-                    onSaved: (String? value) {
-                      password = value;
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty || value.length < 5) {
-                        return "Password doit contenir au moins 5 caracteres ";
-                      }
-                    })),
             Container(
               margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
               child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Année de naissance"),
-                  onSaved: (String? value) {
-                    birth = value;
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty || int.parse(value) > 2021) {
-                      return "La date doit etre valide";
-                    }
-                  }),
+                obscureText: true,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), labelText: "Mot de passe"),
+                onSaved: (String? value) {
+                  _pwd = value;
+                },
+                validator: (String? value) {
+                  if(value!.isEmpty || value.length < 5) {
+                    return "Le mot de passe doit avoir au moins 5 caractères !";
+                  }
+                  else {
+                    return null;
+                  }
+                },
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), labelText: "Année de naissance"),
+                onSaved: (String? value) {
+                  _birth = value;
+                },
+                validator: (String? value) {
+                  if(value!.isEmpty || int.parse(value) > 2021) {
+                    return "L'année de naissance est invalide !";
+                  }
+                  else {
+                    return null;
+                  }
+                },
+              ),
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(10, 0, 10, 20),
               child: TextFormField(
-                  maxLines: 4,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Adresse de facturation"),
-                  onSaved: (String? value) {
-                    address = value;
+                maxLines: 4,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), labelText: "Adresse de facturation"),
+                onSaved: (String? value) {
+                  _address = value;
+                },
+                validator: (String? value) {
+                  if(value!.isEmpty || value.length < 20) {
+                    return "L'adresse doit avoir au moins 20 caractères !";
+                  }
+                  else {
+                    return null;
+                  }
                   },
-                  validator: (value) {
-                    if (value!.isEmpty || value.length < 10) {
-                      return "Ladresse doit contenir au moins 10 caracteres ";
-                    }
-                  }),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -116,27 +133,24 @@ class _SignupState extends State<Signup> {
                 ElevatedButton(
                   child: const Text("S'inscrire"),
                   onPressed: () {
-                    //   if(username!.isEmpty && username!.length<5)
-                    if (keyForm.currentState!.validate()) {
-                      keyForm.currentState!.save();
-                      String message = "username + " +
-                          username! +
-                          "\n email : " +
-                          email! +
-                          "\n password : " +
-                          password! +
-                          "\n annee de naissance : " +
-                          birth! +
-                          "\n adresse :" +
-                          address!;
+                    if(_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+
+                      String message = "Username : " + _username!
+                      + "\n" + "Email : " + _email!
+                      + "\n" + "Mot de passe : " + _pwd!
+                      + "\n" + "Année de naissance : " + _birth!
+                      + "\n" + "Adresse de facturation : " + _address!;
+
                       showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text("Informations"),
-                              content: Text(message),
-                            );
-                          });
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Informations"),
+                            content: Text(message),
+                          );
+                        },
+                      );
                     }
                   },
                 ),
@@ -145,7 +159,9 @@ class _SignupState extends State<Signup> {
                 ),
                 ElevatedButton(
                   child: const Text("Annuler"),
-                  onPressed: () {},
+                  onPressed: () {
+                    _formKey.currentState!.reset();
+                  },
                 )
               ],
             )

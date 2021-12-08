@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 class MyGameInfo extends StatelessWidget {
-  final String image;
-  final String title;
-  MyGameInfo({
-    Key? key,
-    required this.image,
-    required this.title,
-  }) : super(key: key);
+  final String _image;
+  final String _title;
+
+  // ignore: use_key_in_widget_constructors
+  const MyGameInfo(this._image, this._title);
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +16,9 @@ class MyGameInfo extends StatelessWidget {
           children: [
             Container(
               margin: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-              child: Image.asset(image, width: 155, height: 58),
+              child: Image.asset(_image, width: 155, height: 58),
             ),
-            Text(title)
+            Text(_title)
           ],
         ),
       ),
